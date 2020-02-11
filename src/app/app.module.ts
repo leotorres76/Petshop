@@ -13,6 +13,7 @@ import { CartPageComponent } from './pages/store/cart-page/cart-page.component';
 import { FramePageComponent } from './pages/master/frame.page';
 import { ProductCardComponent } from './components/store/product-card/product-card.component';
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
+import { LoadingComponent } from './components/shared/loading/loading.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { NavbarComponent } from './components/shared/navbar/navbar.component';
     ProductsPageComponent,
     FramePageComponent,
     ProductCardComponent,
+    LoadingComponent,
   ],
   imports: [
     BrowserModule, 
