@@ -1,25 +1,29 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from 'src/app/services/data.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { CustomValidator } from 'src/app/validators/custom.validator';
+import { Security } from 'src/app/utils/security.util';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-page',
-  templateUrl: './login-page.component.html'
+  templateUrl: './login-page.component.html',
 })
 export class LoginPageComponent implements OnInit {
-
   public form: FormGroup;
   public busy = false;
 
   constructor(
-    private service: DataService, //injeção de dependencia do DataService
+    private router: Router,
+    private service: DataService,
     private fb: FormBuilder
   ) {
     this.form = this.fb.group({
       username: ['', Validators.compose([
-        Validators.minLength(11),
-        Validators.maxLength(11),
-        Validators.required
+        Validators.minLength(14),
+        Validators.maxLength(14),
+        Validators.required,
+        CustomValidator.isCpf()
       ])],
       password: ['', Validators.compose([
         Validators.minLength(6),
@@ -30,16 +34,16 @@ export class LoginPageComponent implements OnInit {
   }
 
   ngOnInit() {
-    const token = localStorage.getItem('petshop.token');
-    if(token){
+    const token = Security.getToken();
+    if (token) {
       this.busy = true;
       this
         .service
         .refreshToken()
         .subscribe(
           (data: any) => {
-            localStorage.setItem('petshop.token', data.token);
             this.busy = false;
+            this.setUser(data.customer, data.token);
           },
           (err) => {
             localStorage.clear();
@@ -52,12 +56,12 @@ export class LoginPageComponent implements OnInit {
   submit() {
     this.busy = true;
     this
-      .service //neste caso o serviço éo DataService
-      .authenticate(this.form.value) //autenticar os dados coletados no form
+      .service
+      .authenticate(this.form.value)
       .subscribe(
         (data: any) => {
-          localStorage.setItem('petshop.token', data.token);
           this.busy = false;
+          this.setUser(data.customer, data.token);
         },
         (err) => {
           console.log(err);
@@ -65,4 +69,10 @@ export class LoginPageComponent implements OnInit {
         }
       );
   }
+
+  setUser(user, token) {
+    Security.set(user, token);
+    this.router.navigate(['/']);
+  }
+
 }

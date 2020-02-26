@@ -14,9 +14,13 @@ import { FramePageComponent } from './pages/master/frame.page';
 import { ProductCardComponent } from './components/store/product-card/product-card.component';
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
 import { LoadingComponent } from './components/shared/loading/loading.component';
+import { MaskDirective } from './directives/mask.directive';
+import { DataService } from './services/data.service';
+import { AuthService } from './services/auth.service';
 
 @NgModule({
   declarations: [
+    MaskDirective,
     AppComponent,
     NavbarComponent,
     LoginPageComponent,
@@ -35,7 +39,7 @@ import { LoadingComponent } from './components/shared/loading/loading.component'
     AppRoutingModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [DataService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
