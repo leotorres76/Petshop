@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms'
+import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginPageComponent } from './pages/account/login-page/login-page.component';
@@ -17,6 +17,7 @@ import { LoadingComponent } from './components/shared/loading/loading.component'
 import { MaskDirective } from './directives/mask.directive';
 import { DataService } from './services/data.service';
 import { AuthService } from './services/auth.service';
+import { ProfilePageComponent } from './pages/account/profile-page/profile-page.component';
 
 @NgModule({
   declarations: [
@@ -28,13 +29,14 @@ import { AuthService } from './services/auth.service';
     ResetPasswordPageComponent,
     SignupPageComponent,
     CartPageComponent,
+    ProfilePageComponent,
     ProductsPageComponent,
     FramePageComponent,
     ProductCardComponent,
-    LoadingComponent,
+    LoadingComponent
   ],
   imports: [
-    BrowserModule, 
+    BrowserModule,
     HttpClientModule, //este módulo é para realizar as requisições ao backend chamando o http client nos modules de cada componente
     AppRoutingModule,
     ReactiveFormsModule
